@@ -1,0 +1,236 @@
+<!-- <button (click)="getUsers()">find user</button> -->
+<div class="container d-flex justify-content-center">
+    <br>
+    <div class="card">
+        <h5 class="card-header d-flex justify-content-center">Chercher Mission Par Collaborateur</h5>
+        <div class="card-body">
+            <form [formGroup]="findMissionForm" (ngSubmit)="f.form.valid && findMission(f,'modif')" #f="ngForm"
+                novalidate>
+
+
+                <div class="form-group">
+                    <label>Nom du collaborateur</label><span class="requir">*</span>
+                    <!-- <ng-select formControlName="tasks"> -->
+                    <ng-select formControlName="collaborateur">
+
+                        <ng-option *ngFor="let user of users"
+                            [value]="user">{{user.nom | uppercase}} {{user.prenom | titlecase}}
+                        </ng-option>
+                    </ng-select>
+                    <div *ngIf="(findMissionForm.get('collaborateur').touched && !findMissionForm.get('collaborateur').value) || (f.submitted && !findMissionForm.get('collaborateur').value)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="update ml-auto mr-auto">
+                        <button type="submit" class="btn  btn-round">Trouver mission</button>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="missionExiste" id="modif" class="container d-flex justify-content-center">
+    <br>
+    <div class="card">
+        <h5 class="card-header d-flex justify-content-center">Modifier Mission</h5>
+        <div class="card-body">
+            <form [formGroup]="updateMissionForm" (ngSubmit)="g.form.valid && openDialog(g)" #g="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-sm-6">
+                        ​ <div class="form-group">
+                            <label>Date Début</label><span class="requir">*</span>
+                            <input type="date" class="form-control" placeholder="Date Début" formControlName="dateDebut"
+                                matAutocomplete="auto">
+                            <div *ngIf="(updateMissionForm.get('dateDebut').touched && !updateMissionForm.get('dateDebut').value) || (g.submitted && !updateMissionForm.get('dateDebut').value)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+                            <div *ngIf="(updateMissionForm.get('dateDebut').touched && updateMissionForm.get('dateDebut').value && updateMissionForm.get('dateDebut').invalid) || (g.submitted && updateMissionForm.get('dateDebut').invalid && updateMissionForm.get('dateDebut').value)"
+                                class="requir"><small>Veuillez saisir le bon format d'émail</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        ​ <div class="form-group">
+                            <label>Date Fin</label><span class="requir">*</span>
+                            <input type="date" class="form-control" placeholder="dateFin" formControlName="dateFin">
+                            <div *ngIf="(updateMissionForm.get('dateFin').touched && !updateMissionForm.get('dateFin').value) || (g.submitted && updateMissionForm.get('dateFin').invalid)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                        <label>Date Fin </label><span class="requir">*</span>
+                        <input type="date" class="form-control" placeholder="date" formControlName="date">
+                        <div *ngIf="(updateMissionForm.get('dateFin').touched && !updateMissionForm.get('dateFin').value) || (g.submitted && updateMissionForm.get('dateFin').invalid)"
+                            class="requir"><small>Ce champs est obligatoire</small>
+                        </div>
+                    </div> -->
+                <div class="form-group">
+                    <label>Description</label><span class="requir">*</span>
+                    <input type="text" class="form-control" placeholder="Client" formControlName="description">
+                    <div *ngIf="(updateMissionForm.get('description').touched && !updateMissionForm.get('description').value) || (g.submitted && updateMissionForm.get('description').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Modèle </label><span class="requir">*</span>
+                    <input type="text" class="form-control" placeholder="Model" formControlName="model">
+                    <div *ngIf="(updateMissionForm.get('model').touched && !updateMissionForm.get('model').value) || (g.submitted && updateMissionForm.get('model').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tâches Mission</label><span class="requir">*</span>
+                    <!-- <input type="text" class="form-control" placeholder="Taches" formControlName="tachesMissions"> -->
+                    <!-- <div *ngIf="(updateMissionForm.get('tachesMissions').touched && !updateMissionForm.get('tachesMissions').value) || (g.submitted && updateMissionForm.get('tachesMissions').invalid)"
+                            class="requir"><small>Ce champs est obligatoire</small>
+                        </div> -->
+
+                    <!-- <div >
+                        <div *ngFor="let tache of tachesMissions">{{tache.nomTache}}
+                        </div>
+                    </div>  -->
+
+                    <!--  <ng-select [multiple]="true" [items]="tachesMissions.nomTache" >
+                        <ng-option *ngFor="let tache of tachesMissions" [value]="task">{{tache.nomTache}}
+                        </ng-option>
+                    </ng-select> -->
+
+                    <ul class="list-group" *ngFor="let tache of tachesMissions ;let i = index">
+
+                        <div *ngIf="tache">
+                            <li class="list-group-item"><strong style="font-size: 20px;">{{tache.nomTache}} <img
+                                        style="cursor: pointer;position: absolute;right: 20px;width:30px;height: 30px;"
+                                        (click)="deleteTask(i)"
+                                        src="../../../assets/img/icons8-couleur-48.png"></strong>
+                                <div class="requir">Date Echénace: {{tache.dateEcheance | date}}</div><br> Affectée à:
+                                {{tache.utilisateur.prenom}} {{tache.utilisateur.nom}}
+                            </li>
+                            <li *ngIf="tache.status == 'DOING'" class="list-group-item" style="color: darkblue;"> <strong>Statut: En Cours</strong> </li>
+                            <li *ngIf="tache.status == 'DONE'" class="list-group-item" style="color: green;"> <strong>Statut: Soumise </strong></li>
+                            <li *ngIf="tache.status == 'TODO'" class="list-group-item" style="color: orange;"><strong> Statut: À Faire </strong></li>
+
+                        </div>
+                    </ul>
+                    <button type="button" href="#editMissionModal" class="btn  btn-round edit"
+                        data-toggle="modal">Ajouter
+                        tâche</button>
+
+                    <!-- Edit Modal HTML -->
+                    <div style="text-align: center;" id="editMissionModal" class="modal fade" style="margin-top: 50px;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form>
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Nouvelle tâche</h4>
+
+                                        <button type="button" class="close" data-dismiss="modal" #closeModal
+                                            aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="addTaskForm" (ngSubmit)="h.form.valid && addTask(h)"
+                                            #h="ngForm" novalidate>
+                                            <div class="form-group">
+                                                <label>Nom de la tâche</label><span class="requir">*</span>
+
+                                                <input type="text" class="form-control" formControlName="nomTache"
+                                                    required>
+                                                <div *ngIf="(addTaskForm.get('nomTache').touched && !addTaskForm.get('nomTache').value) || (h.submitted && addTaskForm.get('nomTache').invalid)"
+                                                    class="requir"><small>Ce champs est obligatoire</small>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Categorie</label><span class="requir">*</span>
+
+                                                <select class="form-control" formControlName="categorie" required>
+                                                    <option value="">Choisir type de modèle</option>
+                                                    <option *ngFor="let categorie of categories" [value]="categorie">{{
+                                                      categorie
+                                                    }}</option>
+                                                </select>
+                                                <div *ngIf="(addTaskForm.get('categorie').touched && !addTaskForm.get('categorie').value) || (h.submitted && addTaskForm.get('categorie').invalid)"
+                                                    class="requir"><small>Ce champs est obligatoire</small>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Affectation de la tâche</label><span class="requir">*</span>
+                                                <!-- <ng-select formControlName="tasks"> -->
+                                                <ng-select formControlName="utilisateur">
+
+                                                    <ng-option *ngFor="let user of users" [value]="user">{{user.prenom}}
+                                                        {{user.nom}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div *ngIf="(addTaskForm.get('utilisateur').touched && !addTaskForm.get('utilisateur').value) || (h.submitted && !addTaskForm.get('utilisateur').value)"
+                                                    class="requir"><small>Ce champs est obligatoire</small>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description de la tâche</label><span class="requir">*</span>
+                                                <textarea rows="2" type="text" class="form-control"
+                                                    formControlName="description" required></textarea>
+                                                <div *ngIf="(addTaskForm.get('description').touched && !addTaskForm.get('description').value) || (h.submitted && addTaskForm.get('description').invalid)"
+                                                    class="requir"><small>Ce champs est obligatoire</small>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Date Affectation</label><span class="requir">*</span>
+                                                        <input type="date" class="form-control"
+                                                            formControlName="dateAffectation" required>
+                                                        <!-- <div *ngIf="(addTaskForm.get('dateAffectation').touched && !addTaskForm.get('dateAffectation').value) || (h.submitted && addTaskForm.get('dateAffectation').invalid)"
+                                                    class="requir"><small>Ce champs est obligatoire</small>
+                                                </div> -->
+                                                        <div *ngIf="(addTaskForm.get('dateAffectation').touched && !addTaskForm.get('dateAffectation').value) || (h.submitted && addTaskForm.get('dateAffectation').invalid)"
+                                                            class="requir"><small>Ce champs est obligatoire</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Date Echéance</label><span class="requir">*</span>
+                                                        <input type="date" class="form-control"
+                                                            formControlName="dateEcheance" required>
+                                                        <div *ngIf="(addTaskForm.get('dateEcheance').touched && !addTaskForm.get('dateEcheance').value) || (h.submitted && addTaskForm.get('dateEcheance').invalid)"
+                                                            class="requir"><small>Ce champs est obligatoire</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="text-align: center;margin-right: 20px;">
+                                                <button type="submit" class="btn  btn-round">Ajouter</button>
+
+                                                <button data-dismiss="modal" class="btn  btn-round">Fermer</button>
+
+                                            </div>
+
+                                        </form>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="update ml-auto mr-auto">
+                        <button type="submit" class="btn  btn-round">Modifier
+                            mission</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,256 @@
+<div class="container d-flex justify-content-center">
+  <br />
+  <div class="card">
+    <h5 class="card-header d-flex justify-content-center">
+      Nouveau Modèle De Mission
+    </h5>
+    <div class="card-body">
+      <form [formGroup]="modelForm" (ngSubmit)="f.form.valid && createModel()" #f="ngForm" novalidate>
+        <div class="form-group">
+          <label>Description</label><span class="requir">*</span>
+
+          <input type="text" class="form-control" placeholder="Description" formControlName="description" />
+
+          <div *ngIf="
+              (modelForm.get('description').touched &&
+                !modelForm.get('description').value) ||
+              (f.submitted && modelForm.get('description').invalid)
+            " class="requir">
+            <small>Ce champs est obligatoire</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Projet</label><span class="requir">*</span>
+          <input type="text" class="form-control" placeholder="Projet" formControlName="designation" />
+          <div *ngIf="
+              (modelForm.get('designation').touched &&
+                !modelForm.get('designation').value) ||
+              (f.submitted && modelForm.get('designation').invalid)
+            " class="requir">
+            <small>Ce champs est obligatoire</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Type de Modèle</label><span class="requir">*</span>
+          <select class="form-control" formControlName="type" required>
+            <option value="" disabled selected hidden>Choisir type de modèle</option>
+            <option *ngFor="let type of types" [value]="type">{{
+              type
+            }}</option>
+          </select>
+          <div *ngIf="
+          (modelForm.get('type').touched &&
+            !modelForm.get('type').value) ||
+          (g.submitted && modelForm.get('type').invalid)
+        " class="requir">
+            <small>Ce champs est obligatoire</small>
+          </div>
+        </div>
+        <!-- <div class="form-group">
+                      <label>Tâches</label><span class="requir">*</span>
+                      <ng-select [multiple]="true" formControlName="tasks">
+                          <ng-option *ngFor="let task of Modeltasks" [value]="task">{{task.nom}}
+                          </ng-option>
+                      </ng-select>
+
+                     <span>Selected tasks:</span>
+
+
+                      <div *ngFor="let task of modelForm.value.tasks"> {{task.nom}}</div>
+                  </div> -->
+        <!--  -->
+
+        <!-- expansion panel -->
+        <!-- <mat-accordion> -->
+        <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"> -->
+        <!-- <mat-expansion-panel-header>
+                <mat-panel-title> -->
+        <!-- Ajouter les papiers obligatoires -->
+        <!-- </mat-panel-title>
+                <mat-panel-description> </mat-panel-description>
+              </mat-expansion-panel-header> -->
+        <form [formGroup]="papierForm" (ngSubmit)="g.form.valid && ajoutPapier()" #g="ngForm" novalidate>
+
+          <div class="form-group">
+            <div>
+              <label>Papiers obligatoires</label><span class="requir">*</span>
+              <input type="text" class="form-control" placeholder="nom" formControlName="nom" style="width:  96%;" />
+              <div *ngIf="
+                    (papierForm.get('nom').touched &&
+                      !papierForm.get('nom').value) ||
+                    (g.submitted && papierForm.get('nom').invalid)
+                  " class="requir">
+                <small>Ce champs est obligatoire</small>
+              </div>
+            </div>
+
+            <div class="update modif-pos ml-auto mr-auto">
+              <button type="submit" style="border: none; background: transparent;">
+                <img src="../../../assets/img/icons8-add-48.png" width="38px" height="38px" style="margin-top: 14px;" />
+              </button>
+            </div>
+
+          </div>
+
+        </form>
+        <ul class="list-group" *ngFor="let papier of listePapiers; let i = index">
+          <div>
+            <li class="list-group-item">
+              {{ papier.nom }}
+              <!-- <img style="cursor: pointer;position: absolute;right: 20px;width:30px;height: 30px;"
+                        (click)="deleteTask(i)" src="../../../assets/img/icons8-couleur-48.png" /> -->
+            </li>
+          </div>
+        </ul>
+        <br>
+        <!-- </mat-expansion-panel> -->
+
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+               Tâches Ajoutées
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul class="list-group" *ngFor="let tache of listeTaches; let i = index">
+              <div *ngIf="tache">
+                <div>
+                  <li class="list-group-item">
+                    <div style="font-size: 16px;">
+                        <img style="cursor: pointer;position: absolute;right: 15px;width:30px;height: 30px;"
+                        (click)="deleteTask(i)" src="../../../assets/img/icons8-couleur-48.png" />
+                      <div>Tâche {{ tache?.nom }} affectée au {{ tache?.role.libelle | lowercase}}</div>
+
+                      </div>
+                  </li>
+                </div>
+                </div>
+
+            </ul>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <!-- <ul class="list-group" *ngFor="let tache of listeTaches; let i = index">
+
+            <div>
+              <li class="list-group-item">
+                <strong style="font-size: 20px;"
+                  >{{ tache.nom }}
+                  <img
+                    style="cursor: pointer;position: absolute;right: 20px;width:30px;height: 30px;"
+                    (click)="deleteTask(i)"
+                    src="../../../assets/img/icons8-couleur-48.png"
+                /></strong>
+                <div class="requir">Date Echénace {{ tache.dateEcheance }}</div>
+              </li>
+              <li class="list-group-item">Détails: {{ tache.details }}</li>
+            </div>
+          </ul> -->
+
+        <div class="row">
+          <div class="update ml-auto mr-auto">
+            <button type="button" (click)="toggle()" class="btn  btn-round">
+              Ajouter Tâche
+            </button>
+          </div>
+          <div class="update ml-auto mr-auto">
+            <button type="submit" class="btn  btn-round">Ajouter Modèle</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="this.show" class="container d-flex justify-content-center">
+  <br />
+  <div class="card">
+    <h5 class="card-header d-flex justify-content-center">
+      Nouvelle Tâche Modèle
+    </h5>
+    <div class="card-body">
+      <form [formGroup]="taskForm" (ngSubmit)="g.form.valid && ajoutTask() && toggle()" #g="ngForm" novalidate>
+        <div class="form-group">
+          <label>Description</label><span class="requir">*</span>
+          <input type="text" class="form-control" placeholder="Description" formControlName="nom" />
+          <div *ngIf="
+              (taskForm.get('nom').touched && !taskForm.get('nom').value) ||
+              (g.submitted && taskForm.get('nom').invalid)
+            " class="requir">
+            <small>Ce champs est obligatoire</small>
+          </div>
+        </div>
+        <!-- <div class="form-group">
+                          <label>Catégorie</label><span class="requir">*</span>
+                          <input type="text" class="form-control" placeholder="categorie" formControlName="categorie">
+                          <div *ngIf="(taskForm.get('categorie').touched && !taskForm.get('categorie').value) || (g.submitted && taskForm.get('categorie').invalid)"
+                              class="requir"><small>Ce champs est obligatoire</small>
+                          </div>
+                      </div> -->
+
+        <div class="form-group">
+          <label>Catégorie</label><span class="requir">*</span>
+          <select class="form-control" formControlName="categorie" required>
+            <option value="" disabled selected hidden>Choisir la catégorie</option>
+            <option *ngFor="let categorie of categories" [value]="categorie">{{
+              categorie | titlecase
+            }}</option>
+          </select>
+
+          <div
+            *ngIf="
+              (taskForm.get('categorie').touched && !taskForm.get('categorie').value) ||
+              (g.submitted && taskForm.get('categorie').invalid)
+            "
+            class="requir"
+          >
+            <small>Ce champs est obligatoire</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Durée</label><span class="requir">*</span>
+          <input type="number" class="form-control" placeholder="Durée en jours" formControlName="dateEcheance" />
+          <div *ngIf="
+              (taskForm.get('dateEcheance').touched &&
+                !taskForm.get('dateEcheance').value) ||
+              (g.submitted && taskForm.get('dateEcheance').invalid)
+            " class="requir">
+            <small>Ce champs est obligatoire</small>
+          </div>
+        </div>
+        <!-- <div class="form-group">
+                          <label>Modèle</label><span class="requir">*</span>
+                          <input type="number" class="form-control" placeholder="modele" formControlName="modele.id">
+                          <div *ngIf="(taskForm.get('modele.id').touched && !taskForm.get('modele.id').value) || (f.submitted && taskForm.get('modele.id').invalid)"
+                              class="requir"><small>Ce champs est obligatoire</small>
+                          </div>
+                      </div> -->
+        <div class="form-group">
+          <label>A quel role voulez-vous affecter cette tâche</label><span class="requir">*</span>
+          <select class="form-control" formControlName="role" required>
+            <option value="" disabled selected hidden>Choisir affectation</option>
+            <option *ngFor="let role of roles" [ngValue]="role">{{
+              role.libelle
+            }}</option>
+          </select>
+          <div *ngIf="
+          (taskForm.get('role').touched &&
+            !taskForm.get('role').value) ||
+          (g.submitted && taskForm.get('role').invalid)
+        " class="requir">
+            <small>Ce champs est obligatoire</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="update ml-auto mr-auto">
+            <button type="submit" class="btn  btn-round">
+              Ajouter une tâche
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

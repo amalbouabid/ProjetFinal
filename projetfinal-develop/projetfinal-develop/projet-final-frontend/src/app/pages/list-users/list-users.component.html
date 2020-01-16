@@ -1,0 +1,257 @@
+<div class="container d-flex justify-content-center">
+  <br>
+  <div class="card">
+
+      <h5 class="card-header d-flex justify-content-center">Liste Des Collaborateurs</h5>
+<div class="example-container mat-elevation-z8" style="height: 430px;">
+  <div class="d-flex justify-content-between">
+    <!-- <button
+      type="button"
+      class="btn "
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >
+      Ajouter Collaborateur
+    </button> -->
+
+    <div class="example-header">
+      <mat-form-field style="  padding-top: 14px;padding-left: 15px;">
+        <div class="d-flex">
+          <!-- <i  class="material-icons" > search</i>   -->
+          <input
+            matInput
+            (keyup)="applyFilter($event.target.value)"
+            placeholder="Recherche Collaborateur"
+          />
+        </div>
+      </mat-form-field>
+    </div>
+  </div>
+  <table style="color: black!important;"
+    mat-table
+    [dataSource]="dataSource"
+    multiTemplateDataRows
+    class="mat-elevation-z8"
+  >
+    <ng-container  style="color: black!important;"
+      matColumnDef="{{ column }}"
+      *ngFor="let column of columnsToDisplay"
+    >
+      <th mat-header-cell *matHeaderCellDef style="    width: 183px;     text-align: center;">{{ column  | titlecase}}</th>
+      <td mat-cell *matCellDef="let element; let i = index; let expanded" style="    text-align: center;">
+        <!-- <img *ngIf='column == "id" && expandedElement == null'
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+          src="../../../assets/img/icons8-add-48.png" style="width: 23px;"> <img
+          *ngIf='column == "id"  && expandedElement == element'
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+          src="../../../assets/img/icons8-couleur-48.png" style="width: 23px;"> -->
+
+        <!-- <img *ngIf='column == "id" && showIcon()'
+
+          (click)="expandedElement = expandedElement === element ? null : element ;showIcon(i) "
+          src="../../../assets/img/icons8-add-48.png" style="width: 23px;"> -->
+
+        <!-- <img *ngIf='column == "id"  && showIcon() '
+          (click)="expandedElement = expandedElement === element ? null : element ;showIcon(i)"
+          src="../../../assets/img/icons8-couleur-48.png" style="width: 23px;"> -->
+        <label *ngIf="column == 'manager' && element.manager != null">
+          {{ element.manager.prenom | titlecase  }} {{ element[column].nom | titlecase  }}</label
+        >
+        <label *ngIf="column !== 'manager'"> {{ element[column] }}</label>
+        <label *ngIf="column == 'Collaborateur'">  {{ element.prenom | titlecase}} {{ element.nom | titlecase}}</label>
+        <div   *ngIf="column == 'actions'" style="    display: flex;
+        justify-content: space-evenly;">
+
+          <i
+            class="far fa-clipboard"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            (click)="selectelement(element)"
+            style="    cursor: pointer;
+            font-size: 16px;color: #184b8a;"
+          ></i>
+
+        <i
+          class="material-icons"
+          style="    cursor: pointer;
+          font-size: 16px ; color: #962b2b ;"
+          (click)="openDialog(element.id)"
+          >delete</i
+        >
+      </div>
+        <!-- <i class="material-icons" *ngIf='column == "action" ' style="    color: #1c4d91; cursor: pointer;"> edit</i> -->
+
+    <!-- Modal -->
+  <div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  #dismissmodal
+>
+  <div class="modal-dialog" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Affectation Manager
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+        id="closeM"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div style="margin-top: 30px;" class="modal-body">
+        <!-- <form [formGroup]="FormAdd"  (ngSubmit)="f.form.valid && addCollaborateur()" #f="ngForm" novalidate>
+
+  <label>Email</label><span class="requir">*</span>
+  <input type="email" class="form-control" placeholder="Email" formControlName="email">
+  <div *ngIf="(FormAdd.get('email').touched && !FormAdd.get('email').value) || (f.submitted && !FormAdd.get('email').value)"
+  class="requir"><small>Ce champs est obligatoire</small>
+</div>
+<div *ngIf="(FormAdd.get('email').touched && FormAdd.get('email').value && FormAdd.get('email').invalid) || (f.submitted && FormAdd.get('email').invalid && FormAdd.get('email').value)"
+  class="requir"><small>Veuillez saisir le bon format d'émail</small>
+</div>
+<button type="submit" class="btn btn-primary"
+>Ajouter</button>
+  </form> -->
+        <!-- <form
+          class="example-form"
+          [formGroup]="FormAdd"
+          (ngSubmit)="addCollaborateur(Selecteduser)"
+          #f="ngForm"
+          novalidate
+        > -->
+          <!-- <mat-form-field class="example-full-width" style="width: 373px;">
+    <input [(ngModel)]="Selecteduser"  md-autoselect=true type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" >
+
+    <div
+      *ngIf="(FormAdd.get('email').touched && !FormAdd.get('email').value) "
+      class="requir"><small>Ce champs est obligatoire</small>
+    </div>
+    <div
+      *ngIf="(FormAdd.get('email').touched && FormAdd.get('email').value && FormAdd.get('email').invalid) || (f.submitted && FormAdd.get('email').invalid && FormAdd.get('email').value)"
+      class="requir"><small>Veuillez saisir le bon format d'émail</small>
+    </div>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="OnSelected(Selecteduser)">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field> -->
+          <h6>Collaborateur </h6>
+          <label *ngIf="SelectedCollab">{{SelectedCollab.prenom | titlecase }} {{SelectedCollab.nom | titlecase }}</label>
+          <form
+            [formGroup]="FormAdd"
+            (ngSubmit)="f.form.valid && affectManagerToCollaborateur(SelectedCollab) "
+            #f="ngForm"
+            novalidate
+          >
+
+            <div class="form-group">
+              <label>Manager</label><span class="requir">*</span>
+              <ng-select
+                class="form-control"
+                formControlName="manager"
+                required
+              >
+                <ng-option value="">Choisir le manager</ng-option>
+                <ng-option
+                  *ngFor="let manager of managers"
+                  [value]="manager"
+                >
+                  {{ manager.nom | titlecase }} {{ manager.prenom | titlecase  }}</ng-option
+                >
+              </ng-select>
+            </div>
+
+          <br />
+          <div class="d-flex justify-content-center">
+            <div
+              *ngIf="
+                errorMessage === 'user has been added successfully'
+              "
+              class="alert alert-success "
+              role="alert"
+            >
+              Collaborateur ajouté avec succés
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary button-modal"
+            onclick="dismissModal()"
+          >
+            Ajouter
+          </button>
+        <!-- </form> -->
+        <button
+          type="button"
+          class="btn btn-secondary button-modal-close"
+          data-dismiss="modal"
+        >
+          Fermer
+        </button>
+      </form>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- fin modal -->
+
+
+
+      </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="columnsToDisplay.length"
+      >
+        <div
+          class="example-element-detail"
+          [@detailExpand]="
+            element == expandedElement ? 'expanded' : 'collapsed'
+          "
+        >
+          <div class="">details:</div>
+          <div class="">{{ element.nom }}</div>
+          <div class="">{{ element.prenom }}</div>
+          <div class="">{{ element.action }}</div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: columnsToDisplay"
+      class="example-element-row"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="example-detail-row"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
+</div>
+</div>

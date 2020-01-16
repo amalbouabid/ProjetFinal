@@ -1,0 +1,210 @@
+<div class="container d-flex justify-content-center">
+        <br>
+        <div class="card">
+    
+            <h5 class="card-header d-flex justify-content-center">Historique Des Missions</h5>
+            <div class="card-body">
+                <!-- <input style="padding: 0%;" type="text" (keyup)='search($event.target.value)'> -->
+                <div class="example-header">
+                    <mat-form-field>
+                        <div class="d-flex">
+                            <!-- <i  class="material-icons" > search</i>   -->
+                            <input matInput (input)="search($event.target.value)" placeholder="Recherche Collaborateur"
+                                style="padding: 0 !important;"></div>
+                    </mat-form-field>
+                </div>
+                <mat-accordion cdkDropList (cdkDropListDropped)="drop($event)">
+    
+                    <!-- <div class="row">
+                            <div class="col-sm-3">
+                                <h6>Collaborateur</h6>
+                            </div>
+                            <div class="col-sm-4">
+                                <th scope="col">Descritpion</th>
+                            </div>
+                            <div class="col-sm-3">
+                                <th scope="col">Date Début</th>
+                            </div>
+                            <div class="col-sm-2">
+                                <th scope="col">Date Fin</th>
+                            </div>
+                        </div> -->
+                    <div class="header-container" fxLayout="row" fxLayoutAlign="center center">
+                        <mat-panel-title>
+                            COLLABORATEUR
+                        </mat-panel-title>
+                        <mat-panel-description style="width:250px!important">
+                            DESCRIPTION
+                        </mat-panel-description>
+                        <mat-panel-description>
+                            DÉBUT
+                        </mat-panel-description>
+                        <mat-panel-description>
+                            FIN
+                        </mat-panel-description>
+                        <mat-panel-description>
+                            STATUT
+                        </mat-panel-description>
+                        <mat-panel-description>
+    
+                        </mat-panel-description>
+                    </div>
+    
+    
+                    <br>
+    
+                    <mat-expansion-panel *ngFor="let mission of allMissions | paginate: { itemsPerPage: 5, currentPage: p }"
+                        cdkDrag (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    
+                        <mat-expansion-panel-header fxLayout="row" fxLayoutAlign="center center">
+    
+                            <mat-panel-title>
+                                {{ mission.collaborateur.prenom | titlecase}}
+                                {{mission.collaborateur.nom | titlecase}}
+                            </mat-panel-title>
+                            <mat-panel-description style="color: black ;width:250px!important">
+                                {{mission.description | titlecase}}
+                            </mat-panel-description>
+                            <mat-panel-description style="color: black ;">{{mission.dateDebut | date: 'MMM dd,yyyy'}}
+                            </mat-panel-description>
+                            <mat-panel-description style="color: black; ">{{mission.dateFin | date: 'MMM dd,yyyy'}}
+                            </mat-panel-description>
+                            <mat-panel-description *ngIf="mission.status == 'DOING'"
+                                style="color: rgb(0, 0, 0);font-weight: 500;">En Cours
+                            </mat-panel-description>
+    
+                            <mat-panel-description *ngIf="mission.status == 'CANCELED'"
+                                style="color: rgb(207, 7, 7);font-weight: 500;">Annulée
+                            </mat-panel-description>
+                            <mat-panel-description *ngIf="mission.status == 'DONE'"
+                                style="color: rgb(3, 167, 66);font-weight: 500;">Validée
+                            </mat-panel-description>
+                            
+                            <!-- <mat-panel-description *ngIf="mission.status == 'TODO'"
+                                style="color: rgb(27, 1, 255);font-weight: 500;">PENDING
+                            </mat-panel-description> -->
+                            <!-- <mat-panel-description *ngIf="mission.status == 'CANCELED'"><img style="width: 20%;opacity: 0%;" src="../../../assets/img/white.png"></mat-panel-description> -->
+    
+                            <mat-panel-description>
+                                <!-- <img *ngIf="mission.status != 'CANCELED' && mission.status != 'DONE'"
+                                    (click)="openDialog(mission.id) ; propagation($event)"
+                                    style="width: 15%;cursor:pointer;" src="../../../assets/img/cancel-small.png"> -->
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+    
+                        <ng-container *ngIf="mission.tachesMissions[0]">
+                            <div>
+                                <h6 style="color: darkblue;">Tâches</h6>
+                            </div>
+                            <mat-accordion>
+    
+    
+                                <div class="header-container" fxLayout="row" fxLayoutAlign="center center">
+                                    <mat-panel-title>
+    
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Date Validité
+                                    </mat-panel-description>
+                                    <mat-panel-description>
+                                        Document
+                                    </mat-panel-description>
+                                    <mat-panel-description>
+                                        Date Echéance
+                                    </mat-panel-description>
+                                    <mat-panel-description>
+                                        Statut
+                                    </mat-panel-description>
+                                    <!-- <mat-panel-description>
+                                                  Valider
+                                                </mat-panel-description> -->
+                                    <mat-panel-description class="alert-description">
+    
+                                    </mat-panel-description>
+                                </div>
+    
+    
+                                <br>
+    
+                                <mat-expansion-panel *ngFor="let tache of mission.tachesMissions"
+                                    (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    
+                                    <mat-expansion-panel-header fxLayout="row" fxLayoutAlign="center center">
+    
+                                        <mat-panel-title style="color: #000;">{{ tache.nomTache }}</mat-panel-title>
+                                        <mat-panel-description style="color: #000;">
+                                            {{ tache.dateValidation | date: 'MMM dd,yyyy' }}
+                                        </mat-panel-description>
+                                        <mat-panel-description><img
+                                                (click)="download(tache.dbFile.id,tache.dbFile.fileName); propagation($event)"
+                                                *ngIf="tache.categorie == 'DOCUMENT' && tache.dbFile != null"
+                                                style="cursor: pointer;" src="../../assets/img/icon-download.png">
+                                        </mat-panel-description>
+                                        <!-- <mat-panel-description style="width: 45%;"><img  style="width: 35%;height: 100%;"
+                                                      src="../../../assets/img/attente.jpg"  *ngIf="tache.categorie == 'DOCUMENT' && tache.dbFile == null"
+                                                      ></mat-panel-description> -->
+                                        <mat-panel-description style="color: #000;">
+                                            {{ tache.dateEcheance | date: 'MMM dd,yyyy' }}
+                                        </mat-panel-description>
+    
+    
+    
+                                        <mat-panel-description *ngIf="tache.status === 'DONE'"
+                                        style="color:green;font-weight: 500;">Soumise</mat-panel-description>
+                                    <mat-panel-description *ngIf="tache.status === 'CANCELED'"
+                                        style="color:rgb(207, 7, 7);font-weight: 500;">Annulée
+                                    </mat-panel-description>
+                                    <!-- <mat-panel-description *ngIf="tache.status === 'TODO'" style="color:rgb(207, 7, 7);font-weight: 500;">
+                                            {{ tache.status }}</mat-panel-description> -->
+                                    <mat-panel-description *ngIf="tache.status === 'DOING'"
+                                        style="color:rgb(27, 1, 255);font-weight: 500;">En cours
+                                    </mat-panel-description>
+    
+                                        <!-- <mat-panel-description >
+                                                        <img (click)="propagation($event)" [matTooltipPosition]="'above'"
+                                                        matTooltip="DATE D'EXPIRATION POUR CETTE TACHE PROCHE" style="cursor: pointer;"
+                                                        src="../../assets/img/icon-alert-orange.png">
+            
+                                                </mat-panel-description > -->
+                                        <mat-panel-description class="alert-description"
+                                            *ngIf="expiration(tache.dateEcheance) == 'expiration' && tache.status != 'DONE'">
+                                            <img (click)="propagation($event)" [matTooltipPosition]="'above'"
+                                                matTooltip="TACHE EXPIRE" style="cursor: pointer;"
+                                                src="../../assets/img/icon-alert-red.png">
+                                        </mat-panel-description>
+                                        <mat-panel-description class="alert-description"
+                                            *ngIf="expiration(tache.dateEcheance) == 'expiration3' && tache.status != 'DONE' ">
+                                            <img (click)="propagation($event)" *ngIf="mission.status != 'CANCELED'"
+                                                [matTooltipPosition]="'above'"
+                                                matTooltip="DATE D'EXPIRATION POUR CETTE TACHE PROCHE"
+                                                style="cursor: pointer;" src="../../assets/img/icon-alert-orange.png">
+                                        </mat-panel-description>
+                                        <mat-panel-description class="alert-description"
+                                            *ngIf="expiration(tache.dateEcheance) == 'noexpiration' || tache.status == 'DONE'">
+                                        </mat-panel-description>
+                                        
+                                        <!-- <mat-panel-description class="alert-description" *ngIf=" tache.status == 'DONE'">
+                                          
+                                        </mat-panel-description> -->
+                                    </mat-expansion-panel-header>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p><strong>Commentaire: </strong><br>{{ tache.commentaire }}</p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <p><strong>Affectation: </strong><br>{{ tache.utilisateur?.prenom }}
+                                                {{ tache.utilisateur?.nom }}</p>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+    
+                        </ng-container>
+    
+                    </mat-expansion-panel>
+    
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>

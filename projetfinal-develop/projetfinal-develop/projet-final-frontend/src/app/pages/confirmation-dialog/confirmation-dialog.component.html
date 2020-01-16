@@ -1,0 +1,12 @@
+<div style="text-align: center;font-weight: 500;" mat-dialog-content>
+  {{message}}
+</div>
+<div style="text-align: center;color: #184b8a;font-size: 30px;" mat-dialog-actions>
+  <div class="col-sm-6">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Oui</button>
+  </div>
+  <div class="col-sm-6">
+    <button mat-button (click)="onNoClick()">Non</button>
+  </div>
+
+</div>

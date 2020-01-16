@@ -1,0 +1,9 @@
+<div class="text-danger" *ngIf="control && control && (control.dirty || control.touched)">
+    <div *ngIf="control.required"><small>This field is required</small></div>
+    <div *ngIf="control.unique"><small>{{control.unique}}</small></div>
+    <div *ngIf="control.lessThen"><small>{{control.lessThen}}</small></div>
+    <div *ngIf="control.greaterThan"><small>{{control.greaterThan}}</small></div>
+    <div *ngIf="control.email"><small>{{control.email}}</small></div>
+    <div *ngIf="control.mobile"><small>{{control.mobile}}</small></div>
+    <div *ngIf="control.confirmPassword"><small>{{control.confirmPassword}}</small></div>
+</div>

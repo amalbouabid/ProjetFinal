@@ -1,0 +1,53 @@
+<div class="container d-flex justify-content-center">
+    <br>
+    <div class="card">
+        <h5 class="card-header d-flex justify-content-center">Nouvelle tâche modèle</h5>
+        <div class="card-body">
+            <form [formGroup]="taskForm" (ngSubmit)="f.form.valid  && ajoutTask(taskForm.value)" #f="ngForm" novalidate>
+
+
+                <div class="form-group">
+                    <label>Nom</label><span class="requir">*</span>
+                    <input type="text" class="form-control" placeholder="nom" formControlName="nom">
+                    <div *ngIf="(taskForm.get('nom').touched && !taskForm.get('nom').value) || (f.submitted && taskForm.get('nom').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Catégorie</label><span class="requir">*</span>
+                    <input type="text" class="form-control" placeholder="categorie" formControlName="categorie">
+                    <div *ngIf="(taskForm.get('categorie').touched && !taskForm.get('categorie').value) || (f.submitted && taskForm.get('categorie').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Date d'échéance</label><span class="requir">*</span>
+                    <input type="text" class="form-control" placeholder="dateEcheance" formControlName="dateEcheance">
+                    <div *ngIf="(taskForm.get('dateEcheance').touched && !taskForm.get('dateEcheance').value) || (f.submitted && taskForm.get('dateEcheance').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+
+
+
+
+                </div>
+                <!-- <div class="form-group">
+                    <label>Modèle</label><span class="requir">*</span>
+                    <input type="number" class="form-control" placeholder="modele" formControlName="modele.id">
+                    <div *ngIf="(taskForm.get('modele.id').touched && !taskForm.get('modele.id').value) || (f.submitted && taskForm.get('modele.id').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div> -->
+
+
+                <div class="row">
+                    <div class="update ml-auto mr-auto">
+                        <button type="submit" class="btn  btn-round">Ajouter une tâche</button>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+Ceci est le projet final cursus Java
+
+Test envoyer email :
+1-entrer ces deux lignes à la base de données:
+
+INSERT INTO role(
+	id, nom)
+	VALUES (1, 'ADMIN');
+
+
+INSERT INTO utilisateur(
+	id, mot_de_passe, pseudo, role_id)
+	VALUES (1, '$2a$10$KKRsjJCrdPaHTeH0nMM/ouKfZMRKdY9srMytBfO31oyqK8JrZlR7G','user', 1);
+
+1-connecter sur l'interface login (username : user, password: user )
+2-accéder au contact dans le side bar
+3-remplire le formulaire 

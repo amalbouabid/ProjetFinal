@@ -1,0 +1,71 @@
+
+<div class="container d-flex justify-content-center">
+  <br>
+  <div class="card">
+    <h5 class="card-header d-flex justify-content-center">Contactez-Nous</h5>
+    <div class="card-body">
+        <!-- <img style="width: 10%;height:10%;text-align: center;" src="https://whoog.com/wp-content/uploads/2015/06/mail.png"> -->
+
+        <div class="container contact-form">
+            <!-- <div class="contact-image">
+                <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
+            </div> -->
+
+            <form  [formGroup]="mailForm" (ngSubmit)="mail(f.form.valid && mailForm.value)" #f="ngForm" novalidate style="padding: 0px!important;">
+                <h3><strong>Équipe Byblos</strong></h3>
+               <div class="row">
+                    <div class="col-md-6">
+
+                        <!-- <div class="form-group">
+                                <label>Destinateur</label><span class="requir">*</span>
+                            <input type="text" name="txtEmail" class="form-control" placeholder="à" formControlName="to"  />
+
+                            <div *ngIf="(mailForm.get('to').touched && !mailForm.get('to').value) || (f.submitted && !mailForm.get('to').value)"
+                            class="requir"><small>Ce champs est obligatoire</small>
+                        </div>
+                        <div *ngIf="(mailForm.get('to').touched && mailForm.get('to').value && mailForm.get('to').invalid) || (f.submitted && mailForm.get('to').invalid && mailForm.get('to').value)"
+                            class="requir"><small>Veuillez saisir le bon format d'émail</small>
+                        </div>
+
+                        </div> -->
+                        <div class="form-group">
+                                <label>Nom Prénom et Objet</label><span class="requir">*</span>
+                            <input type="text" name="txtPhone" class="form-control" placeholder="Nom Prénom / Objet" formControlName="subject"  />
+                            <div *ngIf="(mailForm.get('subject').touched && !mailForm.get('subject').value) || (f.submitted && !mailForm.get('subject').value)"
+                            class="requir"><small>Ce champs est obligatoire</small>
+                        </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                                <label>Votre messsage</label><span class="requir">*</span>
+                            <textarea name="txtMsg" class="form-control" formControlName="text"  placeholder="écrire ici" style="width: 100%; height: 150px;"></textarea>
+                            <div *ngIf="(mailForm.get('text').touched && !mailForm.get('text').value) || (f.submitted && !mailForm.get('text').value)"
+                            class="requir"><small>Ce champs est obligatoire</small>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <button type="submit" class="btn  btn-round"  >Envoyer</button>
+
+
+            </div>
+
+
+
+                </div>
+
+            </form>
+        </div>
+
+
+      </div>
+  </div>
+</div>
+
+
+

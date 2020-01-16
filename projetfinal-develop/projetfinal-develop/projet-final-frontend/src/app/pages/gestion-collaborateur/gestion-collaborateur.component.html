@@ -1,0 +1,74 @@
+
+<div class="container d-flex justify-content-center">
+  <br>
+  <div class="card" style="margin-top: 90px;">
+      <h5 class="card-header d-flex justify-content-center">Nouveau collaborateur</h5>
+      <div class="card-body">
+          <form [formGroup]="addColForm" (ngSubmit)="f.form.valid &&  addcol()" #f="ngForm" novalidate>
+
+
+              <div class="form-group">
+                  <label>Nom </label><span class="requir">*</span>
+                  <input type="text" class="form-control" placeholder="Nom" formControlName="nom">
+                  <div *ngIf="(addColForm.get('nom').touched && !addColForm.get('nom').value) || (f.submitted && addColForm.get('nom').invalid)"
+                      class="requir"><small>Ce champs est obligatoire</small>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label>Prénom</label><span class="requir">*</span>
+                  <input type="text" class="form-control" placeholder="Prénom" formControlName="prenom">
+                  <div *ngIf="(addColForm.get('prenom').touched && !addColForm.get('prenom').value) || (f.submitted && addColForm.get('prenom').invalid)"
+                      class="requir"><small>Ce champs est obligatoire</small>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label>Email</label><span class="requir">*</span>
+                  <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                  <div *ngIf="(addColForm.get('email').touched && !addColForm.get('email').value) || (f.submitted && !addColForm.get('email').value)"
+                      class="requir"><small>Ce champs est obligatoire</small>
+                  </div>
+                  <div *ngIf="(addColForm.get('email').touched && addColForm.get('email').value && addColForm.get('email').invalid) || (f.submitted && addColForm.get('email').invalid && addColForm.get('email').value)"
+                      class="requir"><small>Veuillez saisir le bon format d'émail</small>
+                  </div>
+
+                <mat-form-field class="example-full-width" style="width: 373px;">
+                  <input [(ngModel)]="Selecteduser" class="form-control" formControlName="Selecteduser" md-autoselect=true type="text" placeholder="Entrer manager *" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" >
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="OnSelected(Selecteduser)">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                  
+                    <div  *ngIf="(addColForm.get('Selecteduser').touched && !addColForm.get('Selecteduser').value) || (f.submitted && addColForm.get('Selecteduser').invalid)"
+                      class="requir"><small>Ce champs est obligatoire</small>
+                  </div>
+           
+                </mat-form-field>
+
+
+
+              </div>
+
+
+
+
+
+
+              <div class="row">
+                  <div class="update ml-auto mr-auto">
+                      <button type="submit" class="btn  btn-round">Ajouter Collaborateur</button>
+
+                  </div>
+              </div>
+
+
+          </form>
+
+      </div>
+
+
+
+
+  </div>
+
+</div>

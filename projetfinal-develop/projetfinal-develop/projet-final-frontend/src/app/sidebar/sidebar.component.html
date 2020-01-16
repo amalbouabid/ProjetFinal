@@ -1,0 +1,23 @@
+
+<div class="sidebar-wrapper">
+  <div class="logo">
+    <a href="" class="simple-text logo-mini">
+      <div class="logo-image-small">
+
+      </div>
+    </a>
+    <a href="/dashboard" class="simple-text logo-normal">
+      Menu
+    </a>
+  </div>
+
+    <ul class="nav">
+        <li *ngFor="let menuItem of menuItems" routerLinkActive="active" class="{{menuItem.class}}">
+            <a *ngIf="menuItem.role===role()" [routerLink]="[menuItem.path]">
+                <i class="nc-icon {{menuItem.icon}}"></i>
+                <p  *ngIf="menuItem.title !== 'Ajouter collaborateur' ">{{menuItem.title}}</p>
+                <p *ngIf="menuItem.title == 'Ajouter collaborateur' " style="  font-size: 11px;"> {{menuItem.title}}</p>
+            </a>
+        </li>
+    </ul>
+</div>

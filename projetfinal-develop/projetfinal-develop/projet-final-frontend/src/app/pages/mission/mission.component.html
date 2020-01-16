@@ -1,0 +1,73 @@
+<div class="container d-flex justify-content-center">
+    <br>
+    <div class="card">
+        <h5 class="card-header d-flex justify-content-center">Nouvelle Mission</h5>
+        <div class="card-body">
+            <form [formGroup]="missionForm" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+                ​<div class="form-group">
+                    <label>Collaborateur</label><span class="requir">*</span>
+                    <ng-select class="form-control" formControlName="collaborateur" required>
+                        <ng-option value="">Choisir le collaborateur</ng-option>
+                        <ng-option *ngFor="let collaborateur of mesCollaborateurs" [value]="collaborateur">
+                            {{collaborateur.nom | uppercase}} {{collaborateur.prenom | titlecase}}</ng-option>
+                    </ng-select>
+                    <div *ngIf="(missionForm.get('collaborateur').touched && !missionForm.get('collaborateur').value) || (f.submitted && missionForm.get('collaborateur').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Description </label><span class="requir">*</span>
+                    <input type="text" class="form-control" placeholder="Description" formControlName="description">
+                    <div *ngIf="(missionForm.get('description').touched && !missionForm.get('description').value) || (f.submitted && missionForm.get('description').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            ​
+                            <label>Date Debut </label><span class="requir">*</span>
+                            <input type="date" class="form-control" placeholder="date" formControlName="dateDebut">
+                            <div *ngIf="(missionForm.get('dateDebut').touched && !missionForm.get('dateDebut').value) || (f.submitted && missionForm.get('dateDebut').invalid)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+
+                            <label>Date Fin </label><span class="requir">*</span>
+                            <input type="date" class="form-control" placeholder="date" formControlName="dateFin">
+                            <div *ngIf="(missionForm.get('dateFin').touched && !missionForm.get('dateFin').value) || (f.submitted && missionForm.get('dateFin').invalid)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Type de Modèle</label><span class="requir">*</span>
+                    <select class="form-control" formControlName="model" required>
+                        <option value="">Choisir type de modèle</option>
+                        <ng-container *ngFor="let model of typesModel" >
+                        <option *ngIf="model.type == 'COURT_SEJOUR'" [ngValue]="model">{{model.designation | titlecase}} Court Séjour</option>
+                        <option *ngIf="model.type == 'LONG_SEJOUR'" [ngValue]="model">{{model.designation | titlecase}} Long Séjour</option>
+   
+                    </ng-container>
+                    </select>
+                    <div *ngIf="(missionForm.get('model').touched && !missionForm.get('model').value) || (f.submitted && missionForm.get('model').invalid)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="update ml-auto mr-auto">
+                        <button type="submit" class="btn  btn-round">Enregister</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

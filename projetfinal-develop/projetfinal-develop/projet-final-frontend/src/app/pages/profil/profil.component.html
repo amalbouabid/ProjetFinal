@@ -1,0 +1,128 @@
+<div class="container d-flex justify-content-center">
+    <br>
+    <div class="card">
+        <h5 class="card-header d-flex justify-content-center">Éditer Mon Profil</h5>
+        <div class="card-body">
+            <form [formGroup]="registerForm" (ngSubmit)="f.form.valid &&  modifProfile(f.value)" #f="ngForm" novalidate>
+
+
+                <div class="form-group">
+                    <label>Nom </label><span class="requir">*</span>
+                    <input type="text" class="form-control" placeholder="Nom" formControlName="nom">
+                     <div *ngIf="(registerForm.get('nom').touched && !registerForm.get('nom').value) || (f.submitted && registerForm.get('nom').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Prénom </label><span class="requir">*</span>
+                    <input type="text" class="form-control" placeholder="Prenom" formControlName="prenom">
+                    <div *ngIf="(registerForm.get('prenom').touched && !registerForm.get('prenom').value) || (f.submitted && registerForm.get('prenom').invalid)"
+                        class="requir"><small>Ce champs est obligatoire</small>
+                    </div>
+                </div>
+              
+
+
+                <div class="form-group">
+                        <label>Mot De Passe Actuel</label><span class="requir">*</span>
+                        <!-- <div class="input-group"> -->
+                            <input id="oldPassword" type="password" class="form-control" placeholder="Mot De Passe Actuel"
+                                formControlName="oldPassword">
+                            <!-- <div class="input-group-append">
+                                <span class="input-group-text"><i style="cursor: pointer;" class="fa fa-eye"
+                                        onclick="togglePassword()"></i></span>
+                            </div> -->
+                            <div *ngIf="(registerForm.get('oldPassword').touched && !registerForm.get('oldPassword').value) || (f.submitted && registerForm.get('oldPassword').invalid)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+                       <!-- </div> -->
+                    </div>
+                
+
+                
+                <!-- <div class="form-group">
+                    
+                    <label>Mot de passe</label><span class="requir">*</span>
+                    <div class="input-group">
+                        <input id="password" type="password" class="form-control" placeholder="Mot de passe"
+                            formControlName="password">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i style="cursor: pointer;" class="fa fa-eye"
+                                    onclick="togglePassword()"></i></span>
+                        </div>
+                        <div *ngIf="(registerForm.get('password').touched && !registerForm.get('password').value) || (f.submitted && registerForm.get('password').invalid)"
+                            class="requir"><small>Ce champs est obligatoire</small>
+                        </div>
+                   </div>
+                </div>
+                <div class="form-group">
+                        <label>Confirmer le mot de passe</label><span class="requir">*</span>
+                        <div class="input-group">
+                            <input id="password" type="password" class="form-control" placeholder="Mot de passe"
+                                formControlName="confirmPassword">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i style="cursor: pointer;" class="fa fa-eye"
+                                        onclick="togglePassword()"></i></span>
+                            </div>
+                            <div *ngIf="(registerForm.get('confirmPassword').touched && !registerForm.get('confirmPassword').value) || (f.submitted && registerForm.get('confirmPassword').invalid)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+                       </div>
+                    </div> -->
+                
+
+                    <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    ​
+                                    <label> Nouveau Mot De Passe</label><span class="requir">*</span>
+                                  
+                                    <input id="password" type="password" class="form-control" placeholder="Nouveau mot de passe"
+                                formControlName="password">
+                                <div *ngIf="(registerForm.get('password').touched && !registerForm.get('password').value) || (f.submitted && registerForm.get('password').invalid)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+        
+                                </div>
+                                <div class="col-sm-6">
+        
+                                        <label>Confirmation Du Mot De Passe</label><span class="requir">*</span>
+                                   
+                                    <input id="password" type="password" class="form-control" placeholder="Confirmation"
+                                formControlName="confirmPassword">
+                                <div *ngIf="(registerForm.get('confirmPassword').touched && !registerForm.get('confirmPassword').value) || (f.submitted && registerForm.get('confirmPassword').invalid)"
+                                class="requir"><small>Ce champs est obligatoire</small>
+                            </div>
+        
+                                </div>
+                            </div>
+                        </div>
+                        
+        
+
+
+
+
+
+
+
+             
+
+                <div class="row">
+                    <div class="update ml-auto mr-auto">
+                        <button type="submit" class="btn  btn-round">Modifier
+                        </button>
+
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+
+    </div>
+
+</div>
